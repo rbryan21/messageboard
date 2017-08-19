@@ -10,3 +10,7 @@ h1 {
 body {
     background: #eee;
 }
+
+.card {
+    margin-top: 8px;
+}

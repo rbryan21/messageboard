@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { WebService } from '../services/web.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'messages',
@@ -7,20 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MessagesComponent implements OnInit {
 
-  messages = [
-    {
-      text: 'some text',
-      owner: 'Tim'
-    },
-    {
-      text: 'other message',
-      owner: 'Jane'
-    }
-  ]
-
-  constructor() { }
+  constructor(private webService: WebService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    var name = this.route.snapshot.params.name;
+    this.webService.getMessages(name);
   }
 
 }
