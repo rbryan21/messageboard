@@ -11,18 +11,35 @@ namespace backend.Controllers
     [Route("api/Messages")]
     public class MessagesController : Controller
     {
-        public  IEnumerable<Models.Message> Get()
+        static List<Models.Message> messages = new List<Models.Message> {
+            new Models.Message {
+                Owner = "John",
+                Text = "hello"
+            },
+            new Models.Message {
+                Owner = "Tim",
+                Text = "Hi"
+            }
+        };
+
+        [HttpGet]
+        public IEnumerable<Models.Message> Get()
         {
-            return new Models.Message[] {
-                new Models.Message {
-                    Owner = "John",
-                    Text = "hello"
-                },
-                new Models.Message {
-                    Owner = "Tim",
-                    Text = "Hi"
-                }
-            };
+            return messages;
         }
+
+        [HttpGet("{name}")]
+        public IEnumerable<Models.Message> Get(string name)
+        {
+            return messages.FindAll(message => message.Owner == name);
+        }
+
+        [HttpPost]
+        public Models.Message Post([FromBody] Models.Message message)
+        {
+            messages.Add(message);
+            return message;
+        }
+
     }
 }
